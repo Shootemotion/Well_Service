@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drilling Command Center v2.0</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles/main.css">
+</head>
+<body>
+    <div id="app">
+        <!-- HEADER (barra de título) -->
+        <header class="header">
+            <div class="header-title">
+                <div class="logo">DC</div>
+                <h1>DRILLING COMMAND v2.0</h1>
+            </div>
+
+            <div class="header-top-actions">
+                <!-- Estado en vivo del pozo (a la altura de la búsqueda) -->
+                <div class="status-badge" id="liveStatus">
+                    <div class="status-dot"></div>
+                    <span id="headerStatus">—</span>
+                </div>
+
+                <!-- Picklist de Pozos con búsqueda interna -->
+                <div class="well-picklist" id="wellPicklist">
+                    <button class="picklist-trigger" id="picklistTrigger" type="button">
+                        <span class="picklist-icon">🔍</span>
+                        <span class="picklist-label">Pozo:</span>
+                        <span class="picklist-current" id="picklistCurrent">— Seleccionar —</span>
+                        <span class="picklist-caret">▾</span>
+                    </button>
+                    <div class="picklist-dropdown" id="picklistDropdown">
+                        <div class="picklist-search-wrap">
+                            <input
+                                type="text"
+                                id="picklistSearch"
+                                class="picklist-search"
+                                placeholder="Buscar por id, nombre, ubicación o RIG…"
+                                autocomplete="off"
+                            >
+                        </div>
+                        <div class="picklist-list" id="picklistList">
+                            <!-- generado dinámicamente -->
+                        </div>
+                        <div class="picklist-footer">
+                            <span id="picklistCount">0</span> pozos · click para seleccionar
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navegación a Próximas Locaciones -->
+                <button class="nav-btn" id="openLocationsBtn" type="button" title="Ver próximas locaciones asignadas">
+                    <span class="nav-btn-icon">🗺️</span>
+                    <span class="nav-btn-label">Próximas Locaciones</span>
+                    <span class="nav-btn-badge" id="locationsBadge">0</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- BARRA DE CONTROL: días (izq) · metadata (der) -->
+        <div class="control-bar">
+            <!-- IZQUIERDA: selector de días paginado -->
+            <div class="days-zone">
+                <div class="days-zone-head">
+                    <span class="days-zone-title">📅 Día operativo</span>
+                    <span class="day-current-label" id="dayCurrentLabel">—</span>
+                    <span class="day-window-range" id="dayWindowRange"></span>
+                    <button class="day-play-btn" id="dayPlay" title="Reproducir avance día a día">
+                        <span class="play-icon">▶</span>
+                        <span class="play-label">Play</span>
+                    </button>
+                </div>
+                <div class="days-pager">
+                    <button class="day-nav-btn" id="dayPrev" title="7 días anteriores">◀</button>
+                    <div class="day-buttons" id="dayContainer">
+                        <!-- generado dinámicamente -->
+                    </div>
+                    <button class="day-nav-btn" id="dayNext" title="7 días siguientes">▶</button>
+                </div>
+                <div class="day-summary">
+                    <span class="chip chip-blue"><b id="daySummaryMD">—</b> MD</span>
+                    <span class="chip chip-gray">Plan: <b id="daySummaryPlan">—</b></span>
+                    <span class="chip" id="daySummaryDelta">Δ —</span>
+                    <span class="chip chip-orange">NPT día: <b id="daySummaryNPT">—</b></span>
+                    <span class="chip chip-blue">Costo día: <b id="daySummaryCost">—</b></span>
+                </div>
+            </div>
+
+            <!-- DERECHA: metadata del pozo -->
+            <div class="meta-zone">
+                <div class="header-info">
+                    <div class="info-badge">
+                        <span class="label">Operador</span>
+                        <span class="value" id="headerOperator">—</span>
+                    </div>
+                    <div class="info-badge">
+                        <span class="label">RIG</span>
+                        <span class="value" id="headerRig">—</span>
+                    </div>
+                    <div class="info-badge">
+                        <span class="label">Ubicación</span>
+                        <span class="value" id="headerLocation">—</span>
+                    </div>
+                    <div class="info-badge">
+                        <span class="label">MD</span>
+                        <span class="value mono" id="headerMD">—</span>
+                    </div>
+                    <div class="info-badge">
+                        <span class="label">TVD</span>
+                        <span class="value mono" id="headerTVD">—</span>
+                    </div>
+                    <div class="info-badge">
+                        <span class="label">TD plan</span>
+                        <span class="value mono" id="headerTD">—</span>
+                    </div>
+                    <div class="info-badge progress-badge">
+                        <span class="label">Avance</span>
+                        <div class="progress-mini"><div class="progress-mini-fill" id="headerProgressBar"></div></div>
+                        <span class="value mono" id="headerProgressTxt">—</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="content">
+            <!-- DDR TABLE (cols 1-2) -->
+            <div class="panel ddr-panel">
+                <div class="panel-header">
+                    <div class="title">
+                        <svg fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/>
+                        </svg>
+                        Registro de Operaciones Diarias (DDR)
+                    </div>
+                    <div class="panel-header-actions">
+                        <span class="chip chip-live" id="livePill">
+                            <span class="live-dot"></span> EN VIVO
+                        </span>
+                    </div>
+                </div>
+                <div class="panel-content scroll-x">
+                    <table class="ddr-table">
+                        <thead>
+                            <tr>
+                                <th>Hora Inicio</th>
+                                <th>Hora Fin</th>
+                                <th class="text-center">Dur (Min)</th>
+                                <th class="text-center">Código</th>
+                                <th>Descripción Operativa</th>
+                                <th class="text-right">MD (m)</th>
+                                <th class="text-right">WOB</th>
+                                <th class="text-right">RPM</th>
+                                <th class="text-right">Torque</th>
+                                <th class="text-right">GPM</th>
+                                <th class="text-right">SPP</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ddrTableBody">
+                            <!-- generado dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- CHART (col 3) -->
+            <div class="panel chart-panel">
+                <div class="panel-header">
+                    <div class="title">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/>
+                        </svg>
+                        Días vs. Profundidad
+                    </div>
+                    <div class="panel-header-actions">
+                        <div class="chart-toggle" id="chartToggle">
+                            <button class="chart-toggle-btn active" data-mode="depth" type="button">Profundidad</button>
+                            <button class="chart-toggle-btn" data-mode="cost" type="button">Costo</button>
+                        </div>
+                        <span class="chip chip-gray" id="chartDayChip">Día —</span>
+                    </div>
+                </div>
+                <div class="panel-content chart-content">
+                    <canvas id="daysDepthChart"></canvas>
+                </div>
+            </div>
+
+            <!-- SCHEMATIC (col 4) -->
+            <div class="panel schematic-panel">
+                <div class="panel-header">
+                    <div class="title">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                        </svg>
+                        Wellbore Schematic
+                    </div>
+                </div>
+                <div class="panel-content schematic-content">
+                    <div class="schematic-svg-col">
+                        <svg id="wellboreSvg" viewBox="0 0 100 450" preserveAspectRatio="none">
+                            <!-- inyectado por JS -->
+                        </svg>
+                    </div>
+                    <div class="schematic-labels-col" id="schematicLabels">
+                        <!-- inyectado por JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- BHA -->
+            <div class="panel bha-panel">
+                <div class="panel-header">
+                    <div class="title">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        Bottom Hole Assembly (BHA)
+                    </div>
+                </div>
+                <div class="panel-content">
+                    <ul class="bha-list" id="bhaList">
+                        <!-- inyectado por JS -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- MUD -->
+            <div class="panel mud-panel">
+                <div class="panel-header">
+                    <div class="title">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                        </svg>
+                        Resumen de Lodo
+                    </div>
+                </div>
+                <div class="panel-content">
+                    <div class="mud-grid" id="mudGrid">
+                        <!-- inyectado por JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- NPT SUMMARY -->
+            <div class="panel npt-panel">
+                <div class="panel-header npt-header">
+                    <div class="title">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                        </svg>
+                        Resumen de NPT (Acumulado)
+                    </div>
+                    <div class="panel-header-actions">
+                        <span class="chip chip-red" id="nptTotalChip">— hrs</span>
+                    </div>
+                </div>
+                <div class="panel-content">
+                    <div class="npt-bar" id="nptStackBar"></div>
+                    <ul class="npt-legend" id="nptLegend"></ul>
+                </div>
+            </div>
+
+            <!-- SENSORS (full width) -->
+            <div class="panel sensors-wrap">
+                <div class="panel-header">
+                    <div class="title">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                        Sensores (Último Evento del Día)
+                    </div>
+                    <div class="panel-header-actions">
+                        <span class="chip chip-gray" id="sensorOpChip">—</span>
+                        <div class="sensor-pager">
+                            <button class="sensor-nav-btn" id="sensorPrev" title="Sensores anteriores">◀</button>
+                            <span class="sensor-page-label" id="sensorPageLabel">—</span>
+                            <button class="sensor-nav-btn" id="sensorNext" title="Más sensores">▶</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-content">
+                    <div class="sensors-panel" id="sensorsContainer">
+                        <!-- inyectado por JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VISTA: PRÓXIMAS LOCACIONES (pantalla completa) -->
+    <div id="locationsView" class="locations-view hidden">
+        <header class="locations-topbar">
+            <button class="loc-back-btn" id="closeLocationsBtn" type="button">
+                <span>◀</span> Volver al Daily Drilling
+            </button>
+            <div class="locations-title">
+                <span class="locations-title-icon">🗺️</span>
+                <div>
+                    <h2>Próximas Locaciones Asignadas</h2>
+                    <p class="locations-subtitle">Estado de preparación: locación, programa, AFE y permisos de ingreso</p>
+                </div>
+            </div>
+            <div class="locations-search-wrap">
+                <span class="loc-search-icon">🔍</span>
+                <input type="text" id="locationsSearch" class="locations-search"
+                       placeholder="Buscar por locación, yacimiento o RIG…" autocomplete="off">
+            </div>
+        </header>
+
+        <div class="locations-stats" id="locationsStats">
+            <!-- inyectado por JS -->
+        </div>
+
+        <div class="locations-timeline-panel">
+            <div class="locations-timeline-title">🗓️ Línea de tiempo de spuds</div>
+            <div class="locations-timeline" id="locationsTimeline">
+                <!-- inyectado por JS -->
+            </div>
+        </div>
+
+        <div class="locations-grid" id="locationsGrid">
+            <!-- inyectado por JS -->
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="./js/dataManager.js"></script>
+    <script src="./js/wellManager.js"></script>
+    <script src="./js/chartManager.js"></script>
+    <script src="./js/schematicManager.js"></script>
+    <script src="./js/locationsManager.js"></script>
+    <script src="./js/app.js"></script>
+</body>
+</html>

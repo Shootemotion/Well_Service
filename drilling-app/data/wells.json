@@ -1,0 +1,2256 @@
+{
+  "nptCategories": {
+    "NPT_M": {
+      "label": "Mecánico",
+      "color": "#ef4444"
+    },
+    "NPT_D": {
+      "label": "Direccional",
+      "color": "#f97316"
+    },
+    "NPT_W": {
+      "label": "Clima",
+      "color": "#0ea5e9"
+    },
+    "NPT_L": {
+      "label": "Logística",
+      "color": "#a855f7"
+    },
+    "NPT_O": {
+      "label": "Operacional",
+      "color": "#eab308"
+    },
+    "NPT_E": {
+      "label": "Externo",
+      "color": "#64748b"
+    }
+  },
+  "wells": [
+    {
+      "id": "C0.X-112",
+      "name": "C0.X-112",
+      "operator": "Operadora-Petroleo",
+      "rig": "H&P 405",
+      "status": "DRILLING 8-1/2\" HOLE",
+      "location": "Cuenca Central",
+      "field": "Loma Verde",
+      "spudDate": "2026-05-15",
+      "plannedTD": 3350,
+      "casings": [
+        {
+          "label": "Conductor",
+          "size": "20\"",
+          "grade": "X-52",
+          "weight": "94#",
+          "shoeMD": 60,
+          "tocMD": 0,
+          "set": true
+        },
+        {
+          "label": "Superficie",
+          "size": "13-3/8\"",
+          "grade": "N-80",
+          "weight": "68#",
+          "shoeMD": 930,
+          "tocMD": 225,
+          "set": true
+        },
+        {
+          "label": "Intermedio",
+          "size": "9-5/8\"",
+          "grade": "P-110",
+          "weight": "47#",
+          "shoeMD": 1890,
+          "tocMD": 820,
+          "set": true
+        },
+        {
+          "label": "Producción",
+          "size": "7\"",
+          "grade": "P-110",
+          "weight": "32#",
+          "shoeMD": 3350,
+          "tocMD": 1785,
+          "set": false
+        }
+      ],
+      "bha": [
+        {
+          "n": 1,
+          "item": "Tricono PDC 8-1/2\"",
+          "length": 0.5
+        },
+        {
+          "n": 2,
+          "item": "Motor de Fondo 6-3/4\"",
+          "length": 8.4
+        },
+        {
+          "n": 3,
+          "item": "MWD/LWD Tool",
+          "length": 9.1
+        },
+        {
+          "n": 4,
+          "item": "Monel NMDC 6-1/2\"",
+          "length": 9.2
+        },
+        {
+          "n": 5,
+          "item": "Heavy Weight Drill Pipe 5\"",
+          "length": 45
+        }
+      ],
+      "mud": {
+        "type": "WBM Lignosulfonato",
+        "density": 10.5,
+        "viscosity": 48,
+        "ph": 9.5,
+        "filtrate": 6.2,
+        "yp": 22,
+        "gels": "8/12"
+      },
+      "days": [
+        {
+          "dayNumber": 1,
+          "date": "2026-05-15",
+          "phase": "Csg Guía",
+          "planMD": 370,
+          "actualMD": 357.3,
+          "operations": [
+            {
+              "startTime": "06:00",
+              "endTime": "08:30",
+              "duration": 150,
+              "code": "RIG_UP",
+              "description": "Rig-up final y armado de torre. Pruebas de BOP.",
+              "md": 0,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0,
+              "gpm": 0,
+              "spp": 0
+            },
+            {
+              "startTime": "08:30",
+              "endTime": "10:00",
+              "duration": 90,
+              "code": "CONN",
+              "description": "Armado de BHA conductor y bajada al pozo.",
+              "md": 59.6,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.2,
+              "gpm": 150,
+              "spp": 280
+            },
+            {
+              "startTime": "10:00",
+              "endTime": "18:00",
+              "duration": 480,
+              "code": "DRILL",
+              "description": "Perforación rotaria de hueco superficial 17-1/2\" desde 60m a 357m. ROP promedio 50m/h.",
+              "md": 357.3,
+              "wob": 22,
+              "rpm": 90,
+              "torque": 10.5,
+              "gpm": 480,
+              "spp": 1800
+            },
+            {
+              "startTime": "18:00",
+              "endTime": "20:00",
+              "duration": 120,
+              "code": "CIRC",
+              "description": "Circulación de fondo y acondicionamiento de lodo.",
+              "md": 357.3,
+              "wob": 0,
+              "rpm": 50,
+              "torque": 3,
+              "gpm": 500,
+              "spp": 1900
+            }
+          ],
+          "planCost": 310000,
+          "actualCost": 316000
+        },
+        {
+          "dayNumber": 2,
+          "date": "2026-05-16",
+          "phase": "Csg Guía",
+          "planMD": 820,
+          "actualMD": 818.9,
+          "operations": [
+            {
+              "startTime": "00:00",
+              "endTime": "10:30",
+              "duration": 630,
+              "code": "DRILL",
+              "description": "Perforación rotaria 17-1/2\" desde 357m a 819m. Formación arenisca con intercalaciones de lutita.",
+              "md": 818.9,
+              "wob": 28,
+              "rpm": 110,
+              "torque": 12.8,
+              "gpm": 510,
+              "spp": 2200
+            },
+            {
+              "startTime": "10:30",
+              "endTime": "11:30",
+              "duration": 60,
+              "code": "CIRC",
+              "description": "Circulación, acondicionamiento de lodo y barrido viscoso.",
+              "md": 818.9,
+              "wob": 0,
+              "rpm": 60,
+              "torque": 3.5,
+              "gpm": 530,
+              "spp": 2100
+            },
+            {
+              "startTime": "11:30",
+              "endTime": "16:00",
+              "duration": 270,
+              "code": "TRIP",
+              "description": "Viaje fuera de pozo (POOH) para corrida de casing.",
+              "md": 818.9,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.5,
+              "gpm": 100,
+              "spp": 250
+            },
+            {
+              "startTime": "16:00",
+              "endTime": "23:59",
+              "duration": 479,
+              "code": "CASING",
+              "description": "Corrida de casing 13-3/8\" N-80 68# en preparación.",
+              "md": 818.9,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.3,
+              "gpm": 80,
+              "spp": 150
+            }
+          ],
+          "planCost": 343000,
+          "actualCost": 348000
+        },
+        {
+          "dayNumber": 3,
+          "date": "2026-05-17",
+          "phase": "Csg Guía",
+          "planMD": 970,
+          "actualMD": 930.6,
+          "operations": [
+            {
+              "startTime": "00:00",
+              "endTime": "06:00",
+              "duration": 360,
+              "code": "CASING",
+              "description": "Continuación corrida de casing 13-3/8\" hasta zapata @ 931m.",
+              "md": 930.6,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.3,
+              "gpm": 80,
+              "spp": 150
+            },
+            {
+              "startTime": "06:00",
+              "endTime": "09:00",
+              "duration": 180,
+              "code": "CIRC",
+              "description": "Circulación previa a cementación, acondicionamiento de pozo.",
+              "md": 930.6,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.4,
+              "gpm": 550,
+              "spp": 2400
+            },
+            {
+              "startTime": "09:00",
+              "endTime": "13:00",
+              "duration": 240,
+              "code": "CEMENT",
+              "description": "Cementación primaria casing 13-3/8\". TOC objetivo @ 223m.",
+              "md": 930.6,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.2,
+              "gpm": 350,
+              "spp": 1800
+            },
+            {
+              "startTime": "13:00",
+              "endTime": "18:30",
+              "duration": 330,
+              "code": "NPT_O",
+              "nptCategory": "operational",
+              "description": "Espera por arribo de cuadrilla de cementación complementaria (WOC).",
+              "md": 930.6,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0,
+              "gpm": 0,
+              "spp": 0
+            },
+            {
+              "startTime": "18:30",
+              "endTime": "23:59",
+              "duration": 329,
+              "code": "BOP",
+              "description": "Nipple-up y prueba de BOP 5000 psi. Pruebas exitosas.",
+              "md": 930.6,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.1,
+              "gpm": 50,
+              "spp": 100
+            }
+          ],
+          "planCost": 437000,
+          "actualCost": 472000
+        },
+        {
+          "dayNumber": 4,
+          "date": "2026-05-18",
+          "phase": "Csg Aislación Intermedio",
+          "planMD": 1410,
+          "actualMD": 1414.4,
+          "operations": [
+            {
+              "startTime": "00:00",
+              "endTime": "04:00",
+              "duration": 240,
+              "code": "TRIP",
+              "description": "Bajada de BHA 12-1/4\" hasta zapata.",
+              "md": 930.6,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.4,
+              "gpm": 100,
+              "spp": 220
+            },
+            {
+              "startTime": "04:00",
+              "endTime": "06:30",
+              "duration": 150,
+              "code": "DRILL",
+              "description": "Drill-out de cemento y zapata. Prueba de presión (FIT).",
+              "md": 952.9,
+              "wob": 8,
+              "rpm": 60,
+              "torque": 6,
+              "gpm": 450,
+              "spp": 2400
+            },
+            {
+              "startTime": "06:30",
+              "endTime": "20:00",
+              "duration": 810,
+              "code": "DRILL",
+              "description": "Perforación rotaria 12-1/4\" desde 953m a 1414m. ROP 45.9 m/h en arenisca.",
+              "md": 1414.4,
+              "wob": 30,
+              "rpm": 115,
+              "torque": 14.5,
+              "gpm": 540,
+              "spp": 2900
+            },
+            {
+              "startTime": "20:00",
+              "endTime": "23:59",
+              "duration": 239,
+              "code": "DRILL",
+              "description": "Continuación perforación 12-1/4\". Formación estable.",
+              "md": 1414.4,
+              "wob": 30,
+              "rpm": 115,
+              "torque": 14.6,
+              "gpm": 540,
+              "spp": 2900
+            }
+          ],
+          "planCost": 252000,
+          "actualCost": 257000
+        },
+        {
+          "dayNumber": 5,
+          "date": "2026-05-19",
+          "phase": "Csg Aislación Intermedio",
+          "planMD": 1790,
+          "actualMD": 1749.4,
+          "operations": [
+            {
+              "startTime": "00:00",
+              "endTime": "08:00",
+              "duration": 480,
+              "code": "DRILL",
+              "description": "Perforación rotaria 12-1/4\" desde 1414m a 1638m. Lutita compacta.",
+              "md": 1637.8,
+              "wob": 32,
+              "rpm": 118,
+              "torque": 15.2,
+              "gpm": 545,
+              "spp": 2980
+            },
+            {
+              "startTime": "08:00",
+              "endTime": "14:00",
+              "duration": 360,
+              "code": "NPT_W",
+              "nptCategory": "weather",
+              "description": "Suspensión de operaciones por tormenta eléctrica y vientos >70 km/h.",
+              "md": 1637.8,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0,
+              "gpm": 0,
+              "spp": 0
+            },
+            {
+              "startTime": "14:00",
+              "endTime": "15:00",
+              "duration": 60,
+              "code": "CIRC",
+              "description": "Recuperación post-clima. Acondicionamiento y barrido.",
+              "md": 1637.8,
+              "wob": 0,
+              "rpm": 60,
+              "torque": 3.8,
+              "gpm": 540,
+              "spp": 2900
+            },
+            {
+              "startTime": "15:00",
+              "endTime": "23:59",
+              "duration": 539,
+              "code": "DRILL",
+              "description": "Reanudación perforación 12-1/4\" desde 1638m a 1749m. ROP 16.7 m/h.",
+              "md": 1749.4,
+              "wob": 33,
+              "rpm": 120,
+              "torque": 15.5,
+              "gpm": 548,
+              "spp": 3010
+            }
+          ],
+          "planCost": 252000,
+          "actualCost": 290000
+        },
+        {
+          "dayNumber": 6,
+          "date": "2026-05-20",
+          "phase": "Csg Aislación Intermedio",
+          "planMD": 1890,
+          "actualMD": 1890.9,
+          "operations": [
+            {
+              "startTime": "00:00",
+              "endTime": "08:00",
+              "duration": 480,
+              "code": "DRILL",
+              "description": "Perforación 12-1/4\" desde 1749m a 1891m. Llegada a profundidad de zapata intermedia.",
+              "md": 1890.9,
+              "wob": 33,
+              "rpm": 120,
+              "torque": 15.8,
+              "gpm": 550,
+              "spp": 3050
+            },
+            {
+              "startTime": "08:00",
+              "endTime": "10:00",
+              "duration": 120,
+              "code": "CIRC",
+              "description": "Circulación de limpieza pre-viaje. Barrido viscoso.",
+              "md": 1890.9,
+              "wob": 0,
+              "rpm": 60,
+              "torque": 3.5,
+              "gpm": 555,
+              "spp": 2950
+            },
+            {
+              "startTime": "10:00",
+              "endTime": "14:00",
+              "duration": 240,
+              "code": "TRIP",
+              "description": "Viaje fuera de pozo (POOH).",
+              "md": 1890.9,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.6,
+              "gpm": 100,
+              "spp": 250
+            },
+            {
+              "startTime": "14:00",
+              "endTime": "20:00",
+              "duration": 360,
+              "code": "CASING",
+              "description": "Corrida de casing intermedio 9-5/8\" P-110 47#.",
+              "md": 1890.9,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.3,
+              "gpm": 80,
+              "spp": 150
+            },
+            {
+              "startTime": "20:00",
+              "endTime": "23:59",
+              "duration": 239,
+              "code": "CEMENT",
+              "description": "Cementación primaria 9-5/8\". TOC objetivo @ 819m.",
+              "md": 1890.9,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.2,
+              "gpm": 320,
+              "spp": 1700
+            }
+          ],
+          "planCost": 452000,
+          "actualCost": 456000
+        },
+        {
+          "dayNumber": 7,
+          "date": "2026-05-21",
+          "phase": "OpenHole",
+          "planMD": 2160,
+          "actualMD": 2047.2,
+          "operations": [
+            {
+              "startTime": "00:00",
+              "endTime": "04:00",
+              "duration": 240,
+              "code": "BOP",
+              "description": "Nipple-up BOP 10000 psi y pruebas según API.",
+              "md": 1890.9,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.1,
+              "gpm": 50,
+              "spp": 100
+            },
+            {
+              "startTime": "04:00",
+              "endTime": "07:00",
+              "duration": 180,
+              "code": "TRIP",
+              "description": "Bajada de BHA 8-1/2\" hasta zapata 9-5/8\".",
+              "md": 1890.9,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.5,
+              "gpm": 100,
+              "spp": 230
+            },
+            {
+              "startTime": "07:00",
+              "endTime": "09:30",
+              "duration": 150,
+              "code": "DRILL",
+              "description": "Drill-out cemento y zapata. Prueba LOT a 16.5 ppg.",
+              "md": 1920.7,
+              "wob": 10,
+              "rpm": 70,
+              "torque": 7,
+              "gpm": 480,
+              "spp": 2700
+            },
+            {
+              "startTime": "09:30",
+              "endTime": "15:00",
+              "duration": 330,
+              "code": "DRILL",
+              "description": "Perforación rotaria 8-1/2\" desde 1921m a 2047m.",
+              "md": 2047.2,
+              "wob": 34,
+              "rpm": 120,
+              "torque": 16,
+              "gpm": 555,
+              "spp": 3080
+            },
+            {
+              "startTime": "15:00",
+              "endTime": "20:30",
+              "duration": 330,
+              "code": "NPT_M",
+              "nptCategory": "mechanical",
+              "description": "Falla en bomba de lodo #2 — reemplazo de empaquetaduras de pistón y válvulas.",
+              "md": 2047.2,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0,
+              "gpm": 0,
+              "spp": 0
+            },
+            {
+              "startTime": "20:30",
+              "endTime": "23:59",
+              "duration": 209,
+              "code": "CIRC",
+              "description": "Recuperación operativa, circulación con bomba #1 únicamente.",
+              "md": 2047.2,
+              "wob": 0,
+              "rpm": 50,
+              "torque": 3,
+              "gpm": 380,
+              "spp": 2300
+            }
+          ],
+          "planCost": 268000,
+          "actualCost": 304000
+        },
+        {
+          "dayNumber": 8,
+          "date": "2026-05-22",
+          "phase": "OpenHole",
+          "planMD": 2460,
+          "actualMD": 2307.8,
+          "operations": [
+            {
+              "startTime": "00:00",
+              "endTime": "11:00",
+              "duration": 660,
+              "code": "DRILL",
+              "description": "Perforación rotaria 8-1/2\" desde 2047m a 2308m. ROP 31.8 m/h.",
+              "md": 2307.8,
+              "wob": 35,
+              "rpm": 122,
+              "torque": 16.4,
+              "gpm": 555,
+              "spp": 3100
+            },
+            {
+              "startTime": "11:00",
+              "endTime": "12:00",
+              "duration": 60,
+              "code": "CONN",
+              "description": "Conexión de tiro (Stand #98). Rellenar pozo.",
+              "md": 2307.8,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.4,
+              "gpm": 180,
+              "spp": 350
+            },
+            {
+              "startTime": "12:00",
+              "endTime": "18:00",
+              "duration": 360,
+              "code": "DRILL",
+              "description": "Perforación deslizando (slide) 4m para corrección de inclinación.",
+              "md": 2312.2,
+              "wob": 26,
+              "rpm": 35,
+              "torque": 13.5,
+              "gpm": 540,
+              "spp": 3250
+            },
+            {
+              "startTime": "18:00",
+              "endTime": "23:59",
+              "duration": 359,
+              "code": "DRILL",
+              "description": "Perforación rotaria desde 2312m a 2308m — reanudada tras corrección.",
+              "md": 2307.8,
+              "wob": 35,
+              "rpm": 121,
+              "torque": 16.3,
+              "gpm": 555,
+              "spp": 3100
+            }
+          ],
+          "planCost": 252000,
+          "actualCost": 257000
+        },
+        {
+          "dayNumber": 9,
+          "date": "2026-05-23",
+          "phase": "OpenHole",
+          "planMD": 2750,
+          "actualMD": 2456.7,
+          "operations": [
+            {
+              "startTime": "00:00",
+              "endTime": "05:00",
+              "duration": 300,
+              "code": "DRILL",
+              "description": "Perforación rotaria 8-1/2\" desde 2308m a 2397m.",
+              "md": 2397.1,
+              "wob": 36,
+              "rpm": 124,
+              "torque": 16.6,
+              "gpm": 558,
+              "spp": 3120
+            },
+            {
+              "startTime": "05:00",
+              "endTime": "14:00",
+              "duration": 540,
+              "code": "NPT_D",
+              "nptCategory": "directional",
+              "description": "Pérdida de señal de MWD a 2397m. Viaje de wash-pipe para recuperación de herramienta.",
+              "md": 2397.1,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0,
+              "gpm": 0,
+              "spp": 0
+            },
+            {
+              "startTime": "14:00",
+              "endTime": "17:00",
+              "duration": 180,
+              "code": "TRIP",
+              "description": "Bajada de BHA con MWD nuevo.",
+              "md": 2397.1,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.5,
+              "gpm": 100,
+              "spp": 250
+            },
+            {
+              "startTime": "17:00",
+              "endTime": "23:59",
+              "duration": 419,
+              "code": "DRILL",
+              "description": "Reanudación perforación rotaria desde 2397m a 2457m.",
+              "md": 2456.7,
+              "wob": 35,
+              "rpm": 122,
+              "torque": 16.5,
+              "gpm": 555,
+              "spp": 3110
+            }
+          ],
+          "planCost": 252000,
+          "actualCost": 308000
+        },
+        {
+          "dayNumber": 10,
+          "date": "2026-05-24",
+          "phase": "OpenHole",
+          "planMD": 2980,
+          "actualMD": 2754.4,
+          "operations": [
+            {
+              "startTime": "00:00",
+              "endTime": "14:00",
+              "duration": 840,
+              "code": "DRILL",
+              "description": "Perforación rotaria 8-1/2\" desde 2457m a 2717m. ROP 25 m/h sostenido.",
+              "md": 2717.2,
+              "wob": 36,
+              "rpm": 124,
+              "torque": 16.8,
+              "gpm": 558,
+              "spp": 3120
+            },
+            {
+              "startTime": "14:00",
+              "endTime": "16:00",
+              "duration": 120,
+              "code": "CONN",
+              "description": "Conexión de tiros sucesivos (Stand #114-#115).",
+              "md": 2717.2,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.4,
+              "gpm": 180,
+              "spp": 360
+            },
+            {
+              "startTime": "16:00",
+              "endTime": "22:30",
+              "duration": 390,
+              "code": "DRILL",
+              "description": "Perforación rotaria desde 2717m a 2754m. Aumento de torque indica formación dura.",
+              "md": 2754.4,
+              "wob": 37,
+              "rpm": 122,
+              "torque": 17.5,
+              "gpm": 558,
+              "spp": 3140
+            },
+            {
+              "startTime": "22:30",
+              "endTime": "23:59",
+              "duration": 89,
+              "code": "CIRC",
+              "description": "Circulación de limpieza y barrido pre-conexión nocturna.",
+              "md": 2754.4,
+              "wob": 0,
+              "rpm": 55,
+              "torque": 3.8,
+              "gpm": 555,
+              "spp": 2950
+            }
+          ],
+          "planCost": 252000,
+          "actualCost": 257000
+        },
+        {
+          "dayNumber": 11,
+          "date": "2026-05-25",
+          "phase": "OpenHole",
+          "planMD": 3090,
+          "actualMD": 2866.1,
+          "operations": [
+            {
+              "startTime": "00:00",
+              "endTime": "06:00",
+              "duration": 360,
+              "code": "NPT_L",
+              "nptCategory": "logistics",
+              "description": "Espera por arribo de tubería de perforación adicional (5\" S-135) desde base.",
+              "md": 2754.4,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0,
+              "gpm": 0,
+              "spp": 0
+            },
+            {
+              "startTime": "06:00",
+              "endTime": "14:20",
+              "duration": 500,
+              "code": "DRILL",
+              "description": "Reanudación perforación rotaria 8-1/2\" desde 2754m a 2814m.",
+              "md": 2814,
+              "wob": 33,
+              "rpm": 119,
+              "torque": 16,
+              "gpm": 552,
+              "spp": 3070
+            },
+            {
+              "startTime": "14:20",
+              "endTime": "16:50",
+              "duration": 150,
+              "code": "DRILL",
+              "description": "Perforación rotaria desde 2814m a 2866m.",
+              "md": 2866.1,
+              "wob": 34,
+              "rpm": 121,
+              "torque": 16.2,
+              "gpm": 551,
+              "spp": 3095
+            },
+            {
+              "startTime": "16:50",
+              "endTime": "18:00",
+              "duration": 70,
+              "code": "CONN",
+              "description": "Conexión de tiro (Stand #122).",
+              "md": 2866.1,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.3,
+              "gpm": 180,
+              "spp": 350
+            },
+            {
+              "startTime": "18:00",
+              "endTime": "23:59",
+              "duration": 359,
+              "code": "DRILL",
+              "description": "Continuación rotaria desde 2866m — fin de turno.",
+              "md": 2866.1,
+              "wob": 34,
+              "rpm": 121,
+              "torque": 16.2,
+              "gpm": 551,
+              "spp": 3095
+            }
+          ],
+          "planCost": 252000,
+          "actualCost": 290000
+        },
+        {
+          "dayNumber": 12,
+          "date": "2026-05-26",
+          "phase": "OpenHole",
+          "planMD": 3200,
+          "actualMD": 2951.2,
+          "operations": [
+            {
+              "startTime": "00:00",
+              "endTime": "02:30",
+              "duration": 150,
+              "code": "DRILL",
+              "description": "Perforación rotaria de fase 8-1/2\" desde 2866m a 2900m. Parámetros estables.",
+              "md": 2899.6,
+              "wob": 35,
+              "rpm": 120,
+              "torque": 16.5,
+              "gpm": 550,
+              "spp": 3100
+            },
+            {
+              "startTime": "02:30",
+              "endTime": "03:00",
+              "duration": 30,
+              "code": "CONN",
+              "description": "Conexión de tiro de perforación (Stand #124). Rellenar pozo.",
+              "md": 2899.6,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.5,
+              "gpm": 200,
+              "spp": 400
+            },
+            {
+              "startTime": "03:00",
+              "endTime": "06:15",
+              "duration": 195,
+              "code": "DRILL",
+              "description": "Perforación deslizando (Slide) para corrección de azimut (+1.2°/7m).",
+              "md": 2919.9,
+              "wob": 28,
+              "rpm": 40,
+              "torque": 14.1,
+              "gpm": 540,
+              "spp": 3250
+            },
+            {
+              "startTime": "06:15",
+              "endTime": "07:00",
+              "duration": 45,
+              "code": "NPT_M",
+              "nptCategory": "mechanical",
+              "description": "Falla en bomba de lodo #2. Cambio de empaquetadura de pistón.",
+              "md": 2919.9,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0,
+              "gpm": 0,
+              "spp": 0
+            },
+            {
+              "startTime": "07:00",
+              "endTime": "09:45",
+              "duration": 165,
+              "code": "DRILL",
+              "description": "Perforación rotaria desde 2920m a 2951m. Incremento de ROP a 15.2 m/h.",
+              "md": 2951.2,
+              "wob": 38,
+              "rpm": 125,
+              "torque": 17.2,
+              "gpm": 560,
+              "spp": 3150
+            },
+            {
+              "startTime": "09:45",
+              "endTime": "10:30",
+              "duration": 45,
+              "code": "CIRC",
+              "description": "Circulación de fondo para limpiar pozo y acondicionar lodo antes de viaje.",
+              "md": 2951.2,
+              "wob": 5,
+              "rpm": 60,
+              "torque": 4.2,
+              "gpm": 560,
+              "spp": 2900
+            }
+          ],
+          "planCost": 248000,
+          "actualCost": 264900
+        }
+      ],
+      "afe": 3570000
+    },
+    {
+      "id": "C0.X-115",
+      "name": "C0.X-115",
+      "operator": "Operadora-Petroleo",
+      "rig": "H&P 500",
+      "status": "DRILLING 6-1/8\" HOLE",
+      "location": "Bloque Sur",
+      "field": "Cañadón Oeste",
+      "spudDate": "2026-05-17",
+      "plannedTD": 3050,
+      "casings": [
+        {
+          "label": "Conductor",
+          "size": "20\"",
+          "grade": "X-52",
+          "weight": "94#",
+          "shoeMD": 70,
+          "tocMD": 0,
+          "set": true
+        },
+        {
+          "label": "Superficie",
+          "size": "13-3/8\"",
+          "grade": "K-55",
+          "weight": "61#",
+          "shoeMD": 935,
+          "tocMD": 190,
+          "set": true
+        },
+        {
+          "label": "Intermedio",
+          "size": "9-5/8\"",
+          "grade": "L-80",
+          "weight": "47#",
+          "shoeMD": 2000,
+          "tocMD": 810,
+          "set": true
+        },
+        {
+          "label": "Liner Prod.",
+          "size": "7\"",
+          "grade": "P-110",
+          "weight": "29#",
+          "shoeMD": 3050,
+          "tocMD": 1860,
+          "set": false
+        }
+      ],
+      "bha": [
+        {
+          "n": 1,
+          "item": "Tricono PDC 6-1/8\"",
+          "length": 0.4
+        },
+        {
+          "n": 2,
+          "item": "Motor RSS PowerDrive 6\"",
+          "length": 9.6
+        },
+        {
+          "n": 3,
+          "item": "MWD/Gamma/Resistividad",
+          "length": 10.2
+        },
+        {
+          "n": 4,
+          "item": "Heavy Weight DP 4\"",
+          "length": 38
+        }
+      ],
+      "mud": {
+        "type": "OBM Sintético",
+        "density": 11.8,
+        "viscosity": 56,
+        "ph": null,
+        "filtrate": 2.4,
+        "yp": 28,
+        "gels": "10/16"
+      },
+      "days": [
+        {
+          "dayNumber": 1,
+          "date": "2026-05-17",
+          "phase": "Csg Guía",
+          "planMD": 570,
+          "actualMD": 571.9,
+          "operations": [
+            {
+              "startTime": "06:00",
+              "endTime": "11:30",
+              "duration": 330,
+              "code": "DRILL",
+              "description": "Perforación rotaria fase 17-1/2\" desde 0m a 572m. Inicio exitoso.",
+              "md": 571.9,
+              "wob": 30,
+              "rpm": 95,
+              "torque": 13.2,
+              "gpm": 510,
+              "spp": 2900
+            },
+            {
+              "startTime": "11:30",
+              "endTime": "16:00",
+              "duration": 270,
+              "code": "DRILL",
+              "description": "Continuación perforación 17-1/2\" — formación arenisca suelta.",
+              "md": 571.9,
+              "wob": 25,
+              "rpm": 100,
+              "torque": 11,
+              "gpm": 500,
+              "spp": 2700
+            },
+            {
+              "startTime": "16:00",
+              "endTime": "23:59",
+              "duration": 479,
+              "code": "CIRC",
+              "description": "Acondicionamiento de lodo y barrido viscoso de limpieza.",
+              "md": 571.9,
+              "wob": 0,
+              "rpm": 55,
+              "torque": 3.2,
+              "gpm": 510,
+              "spp": 2750
+            }
+          ],
+          "planCost": 287000,
+          "actualCost": 273000
+        },
+        {
+          "dayNumber": 2,
+          "date": "2026-05-18",
+          "phase": "Csg Guía",
+          "planMD": 930,
+          "actualMD": 934.1,
+          "operations": [
+            {
+              "startTime": "00:00",
+              "endTime": "12:00",
+              "duration": 720,
+              "code": "DRILL",
+              "description": "Perforación rotaria 17-1/2\" hasta zapata superficial @ 934m.",
+              "md": 934.1,
+              "wob": 28,
+              "rpm": 105,
+              "torque": 12.8,
+              "gpm": 520,
+              "spp": 2850
+            },
+            {
+              "startTime": "12:00",
+              "endTime": "16:00",
+              "duration": 240,
+              "code": "TRIP",
+              "description": "Viaje fuera de pozo (POOH).",
+              "md": 934.1,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.5,
+              "gpm": 100,
+              "spp": 230
+            },
+            {
+              "startTime": "16:00",
+              "endTime": "23:59",
+              "duration": 479,
+              "code": "CASING",
+              "description": "Corrida de casing 13-3/8\" K-55 61# hasta zapata.",
+              "md": 934.1,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.3,
+              "gpm": 80,
+              "spp": 150
+            }
+          ],
+          "planCost": 381000,
+          "actualCost": 361000
+        },
+        {
+          "dayNumber": 3,
+          "date": "2026-05-19",
+          "phase": "Csg Aislación Intermedio",
+          "planMD": 1430,
+          "actualMD": 1429.7,
+          "operations": [
+            {
+              "startTime": "00:00",
+              "endTime": "04:00",
+              "duration": 240,
+              "code": "CEMENT",
+              "description": "Cementación primaria casing 13-3/8\".",
+              "md": 934.1,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.2,
+              "gpm": 320,
+              "spp": 1700
+            },
+            {
+              "startTime": "04:00",
+              "endTime": "08:00",
+              "duration": 240,
+              "code": "BOP",
+              "description": "Nipple-up de BOP y pruebas según procedimiento.",
+              "md": 934.1,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.1,
+              "gpm": 50,
+              "spp": 100
+            },
+            {
+              "startTime": "08:00",
+              "endTime": "10:00",
+              "duration": 120,
+              "code": "TRIP",
+              "description": "Bajada de BHA 12-1/4\" para fase intermedia.",
+              "md": 934.1,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.5,
+              "gpm": 100,
+              "spp": 220
+            },
+            {
+              "startTime": "10:00",
+              "endTime": "23:59",
+              "duration": 839,
+              "code": "DRILL",
+              "description": "Perforación rotaria 12-1/4\" desde 934m a 1430m. ROP 37 m/h.",
+              "md": 1429.7,
+              "wob": 31,
+              "rpm": 113,
+              "torque": 14.8,
+              "gpm": 540,
+              "spp": 2980
+            }
+          ],
+          "planCost": 377000,
+          "actualCost": 358000
+        },
+        {
+          "dayNumber": 4,
+          "date": "2026-05-20",
+          "phase": "Csg Aislación Intermedio",
+          "planMD": 2000,
+          "actualMD": 1858.6,
+          "operations": [
+            {
+              "startTime": "00:00",
+              "endTime": "07:00",
+              "duration": 420,
+              "code": "DRILL",
+              "description": "Perforación rotaria 12-1/4\" desde 1430m a 1716m.",
+              "md": 1715.6,
+              "wob": 32,
+              "rpm": 115,
+              "torque": 15,
+              "gpm": 545,
+              "spp": 3000
+            },
+            {
+              "startTime": "07:00",
+              "endTime": "13:00",
+              "duration": 360,
+              "code": "NPT_M",
+              "nptCategory": "mechanical",
+              "description": "Falla en top-drive — sobrecalentamiento del motor eléctrico. Reemplazo de ventilador.",
+              "md": 1715.6,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0,
+              "gpm": 0,
+              "spp": 0
+            },
+            {
+              "startTime": "13:00",
+              "endTime": "23:59",
+              "duration": 659,
+              "code": "DRILL",
+              "description": "Reanudación rotaria desde 1716m a 1859m.",
+              "md": 1858.6,
+              "wob": 31,
+              "rpm": 113,
+              "torque": 14.7,
+              "gpm": 545,
+              "spp": 2980
+            }
+          ],
+          "planCost": 287000,
+          "actualCost": 304000
+        },
+        {
+          "dayNumber": 5,
+          "date": "2026-05-21",
+          "phase": "Csg Aislación Intermedio",
+          "planMD": 2240,
+          "actualMD": 2001.6,
+          "operations": [
+            {
+              "startTime": "00:00",
+              "endTime": "08:00",
+              "duration": 480,
+              "code": "DRILL",
+              "description": "Perforación rotaria 12-1/4\" desde 1859m a 2002m — llegada a zapata intermedia.",
+              "md": 2001.6,
+              "wob": 31,
+              "rpm": 115,
+              "torque": 15.1,
+              "gpm": 545,
+              "spp": 3050
+            },
+            {
+              "startTime": "08:00",
+              "endTime": "10:00",
+              "duration": 120,
+              "code": "CIRC",
+              "description": "Circulación pre-viaje y barrido.",
+              "md": 2001.6,
+              "wob": 0,
+              "rpm": 60,
+              "torque": 3.5,
+              "gpm": 550,
+              "spp": 2900
+            },
+            {
+              "startTime": "10:00",
+              "endTime": "14:00",
+              "duration": 240,
+              "code": "TRIP",
+              "description": "Viaje fuera de pozo para corrida de casing 9-5/8\".",
+              "md": 2001.6,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.5,
+              "gpm": 100,
+              "spp": 250
+            },
+            {
+              "startTime": "14:00",
+              "endTime": "20:00",
+              "duration": 360,
+              "code": "CASING",
+              "description": "Corrida de casing 9-5/8\" L-80 47# hasta zapata @ 2002m.",
+              "md": 2001.6,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.3,
+              "gpm": 80,
+              "spp": 150
+            },
+            {
+              "startTime": "20:00",
+              "endTime": "23:59",
+              "duration": 239,
+              "code": "CEMENT",
+              "description": "Cementación primaria casing 9-5/8\".",
+              "md": 2001.6,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.2,
+              "gpm": 320,
+              "spp": 1700
+            }
+          ],
+          "planCost": 490000,
+          "actualCost": 462000
+        },
+        {
+          "dayNumber": 6,
+          "date": "2026-05-22",
+          "phase": "OpenHole",
+          "planMD": 2380,
+          "actualMD": 2239.8,
+          "operations": [
+            {
+              "startTime": "00:00",
+              "endTime": "06:00",
+              "duration": 360,
+              "code": "NPT_O",
+              "nptCategory": "operational",
+              "description": "WOC (Wait on Cement) — espera por curado de cemento previo al drill-out.",
+              "md": 2001.6,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0,
+              "gpm": 0,
+              "spp": 0
+            },
+            {
+              "startTime": "06:00",
+              "endTime": "09:00",
+              "duration": 180,
+              "code": "BOP",
+              "description": "Pruebas de BOP 10000 psi post-cementación.",
+              "md": 2001.6,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.1,
+              "gpm": 50,
+              "spp": 100
+            },
+            {
+              "startTime": "09:00",
+              "endTime": "12:00",
+              "duration": 180,
+              "code": "TRIP",
+              "description": "Bajada de BHA 8-1/2\" con motor RSS.",
+              "md": 2001.6,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.5,
+              "gpm": 100,
+              "spp": 230
+            },
+            {
+              "startTime": "12:00",
+              "endTime": "23:59",
+              "duration": 719,
+              "code": "DRILL",
+              "description": "Perforación rotaria 8-1/2\" desde 2002m a 2240m. ROP 21 m/h.",
+              "md": 2239.8,
+              "wob": 34,
+              "rpm": 122,
+              "torque": 16.5,
+              "gpm": 558,
+              "spp": 3120
+            }
+          ],
+          "planCost": 303000,
+          "actualCost": 319000
+        },
+        {
+          "dayNumber": 7,
+          "date": "2026-05-23",
+          "phase": "OpenHole",
+          "planMD": 2570,
+          "actualMD": 2573.4,
+          "operations": [
+            {
+              "startTime": "00:00",
+              "endTime": "12:00",
+              "duration": 720,
+              "code": "DRILL",
+              "description": "Perforación rotaria 8-1/2\" desde 2240m a 2497m. ROP 22.5 m/h.",
+              "md": 2497.2,
+              "wob": 35,
+              "rpm": 124,
+              "torque": 16.7,
+              "gpm": 560,
+              "spp": 3140
+            },
+            {
+              "startTime": "12:00",
+              "endTime": "13:00",
+              "duration": 60,
+              "code": "CONN",
+              "description": "Conexión de tiro (Stand #82).",
+              "md": 2497.2,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.4,
+              "gpm": 180,
+              "spp": 350
+            },
+            {
+              "startTime": "13:00",
+              "endTime": "23:59",
+              "duration": 659,
+              "code": "DRILL",
+              "description": "Perforación rotaria desde 2497m a 2573m — formación dura.",
+              "md": 2573.4,
+              "wob": 37,
+              "rpm": 122,
+              "torque": 17.4,
+              "gpm": 562,
+              "spp": 3180
+            }
+          ],
+          "planCost": 287000,
+          "actualCost": 273000
+        },
+        {
+          "dayNumber": 8,
+          "date": "2026-05-24",
+          "phase": "OpenHole",
+          "planMD": 2720,
+          "actualMD": 2573.4,
+          "operations": [
+            {
+              "startTime": "00:00",
+              "endTime": "10:00",
+              "duration": 600,
+              "code": "NPT_D",
+              "nptCategory": "directional",
+              "description": "Twist-off de drill pipe a 2573m. Operación de fishing — recuperación de pescado.",
+              "md": 2573.4,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0,
+              "gpm": 0,
+              "spp": 0
+            },
+            {
+              "startTime": "10:00",
+              "endTime": "16:00",
+              "duration": 360,
+              "code": "TRIP",
+              "description": "Bajada de fishing assembly para recuperación.",
+              "md": 2573.4,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.6,
+              "gpm": 100,
+              "spp": 250
+            },
+            {
+              "startTime": "16:00",
+              "endTime": "23:59",
+              "duration": 479,
+              "code": "DRILL",
+              "description": "Recuperación de pescado y reanudación parcial.",
+              "md": 2573.4,
+              "wob": 0,
+              "rpm": 30,
+              "torque": 8.5,
+              "gpm": 350,
+              "spp": 2400
+            }
+          ],
+          "planCost": 287000,
+          "actualCost": 325000
+        },
+        {
+          "dayNumber": 9,
+          "date": "2026-05-25",
+          "phase": "OpenHole",
+          "planMD": 2910,
+          "actualMD": 2811.7,
+          "operations": [
+            {
+              "startTime": "00:00",
+              "endTime": "08:00",
+              "duration": 480,
+              "code": "TRIP",
+              "description": "Viaje al fondo con BHA reparado y nuevo motor RSS.",
+              "md": 2573.4,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.5,
+              "gpm": 100,
+              "spp": 230
+            },
+            {
+              "startTime": "08:00",
+              "endTime": "10:00",
+              "duration": 120,
+              "code": "CIRC",
+              "description": "Circulación de acondicionamiento previo a reanudación.",
+              "md": 2573.4,
+              "wob": 0,
+              "rpm": 55,
+              "torque": 3,
+              "gpm": 540,
+              "spp": 2900
+            },
+            {
+              "startTime": "10:00",
+              "endTime": "23:59",
+              "duration": 839,
+              "code": "DRILL",
+              "description": "Perforación rotaria 6-1/8\" desde 2573m a 2812m — cambio a hueco final.",
+              "md": 2811.7,
+              "wob": 32,
+              "rpm": 130,
+              "torque": 15.8,
+              "gpm": 540,
+              "spp": 3050
+            }
+          ],
+          "planCost": 287000,
+          "actualCost": 273000
+        },
+        {
+          "dayNumber": 10,
+          "date": "2026-05-26",
+          "phase": "OpenHole",
+          "planMD": 3050,
+          "actualMD": 2907,
+          "operations": [
+            {
+              "startTime": "00:00",
+              "endTime": "04:30",
+              "duration": 270,
+              "code": "DRILL",
+              "description": "Perforación rotaria 6-1/8\" desde 2812m a 2907m. Parámetros estables.",
+              "md": 2907,
+              "wob": 34,
+              "rpm": 132,
+              "torque": 16.2,
+              "gpm": 545,
+              "spp": 3070
+            },
+            {
+              "startTime": "04:30",
+              "endTime": "12:00",
+              "duration": 450,
+              "code": "DRILL",
+              "description": "Perforación rotaria de fase 6-1/8\" — ROP sostenido 20 m/h, navegación geosteering.",
+              "md": 2907,
+              "wob": 36,
+              "rpm": 130,
+              "torque": 16.8,
+              "gpm": 565,
+              "spp": 3120
+            },
+            {
+              "startTime": "12:00",
+              "endTime": "13:00",
+              "duration": 60,
+              "code": "CONN",
+              "description": "Conexión de tiro (Stand #95).",
+              "md": 2907,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.4,
+              "gpm": 180,
+              "spp": 360
+            },
+            {
+              "startTime": "13:00",
+              "endTime": "23:59",
+              "duration": 659,
+              "code": "DRILL",
+              "description": "Perforación direccional para mantener inclinación en reservorio objetivo.",
+              "md": 2907,
+              "wob": 34,
+              "rpm": 128,
+              "torque": 16,
+              "gpm": 555,
+              "spp": 3080
+            }
+          ],
+          "planCost": 284000,
+          "actualCost": 272950
+        }
+      ],
+      "afe": 3270000
+    },
+    {
+      "id": "C0.X-118",
+      "name": "C0.X-118",
+      "operator": "Operadora-Petroleo",
+      "rig": "H&P 350",
+      "status": "CASING RUNNING",
+      "location": "Bloque Este",
+      "field": "Sierra Pintada",
+      "spudDate": "2026-05-19",
+      "plannedTD": 2700,
+      "casings": [
+        {
+          "label": "Conductor",
+          "size": "20\"",
+          "grade": "X-52",
+          "weight": "94#",
+          "shoeMD": 80,
+          "tocMD": 0,
+          "set": true
+        },
+        {
+          "label": "Superficie",
+          "size": "13-3/8\"",
+          "grade": "K-55",
+          "weight": "54#",
+          "shoeMD": 820,
+          "tocMD": 145,
+          "set": true
+        },
+        {
+          "label": "Intermedio",
+          "size": "9-5/8\"",
+          "grade": "N-80",
+          "weight": "43#",
+          "shoeMD": 2410,
+          "tocMD": 915,
+          "set": false
+        },
+        {
+          "label": "Producción",
+          "size": "7\"",
+          "grade": "L-80",
+          "weight": "26#",
+          "shoeMD": 2700,
+          "tocMD": 2120,
+          "set": false
+        }
+      ],
+      "bha": [
+        {
+          "n": 1,
+          "item": "Casing Shoe 9-5/8\"",
+          "length": 0.3
+        },
+        {
+          "n": 2,
+          "item": "Float Collar 9-5/8\"",
+          "length": 0.7
+        },
+        {
+          "n": 3,
+          "item": "Casing Centralizadores (x14)",
+          "length": 0
+        },
+        {
+          "n": 4,
+          "item": "Casing 9-5/8\" N-80 43#",
+          "length": 2500
+        }
+      ],
+      "mud": {
+        "type": "WBM KCl/Polímero",
+        "density": 9.8,
+        "viscosity": 42,
+        "ph": 10.2,
+        "filtrate": 5.8,
+        "yp": 20,
+        "gels": "6/10"
+      },
+      "days": [
+        {
+          "dayNumber": 1,
+          "date": "2026-05-19",
+          "phase": "Csg Guía",
+          "planMD": 480,
+          "actualMD": 462.9,
+          "operations": [
+            {
+              "startTime": "06:00",
+              "endTime": "10:00",
+              "duration": 240,
+              "code": "RIG_UP",
+              "description": "Finalización de rig-up y pruebas funcionales.",
+              "md": 0,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0,
+              "gpm": 0,
+              "spp": 0
+            },
+            {
+              "startTime": "10:00",
+              "endTime": "23:59",
+              "duration": 839,
+              "code": "DRILL",
+              "description": "Perforación rotaria 17-1/2\" desde 0m a 463m.",
+              "md": 462.9,
+              "wob": 24,
+              "rpm": 95,
+              "torque": 11.2,
+              "gpm": 500,
+              "spp": 2600
+            }
+          ],
+          "planCost": 278000,
+          "actualCost": 242000
+        },
+        {
+          "dayNumber": 2,
+          "date": "2026-05-20",
+          "phase": "Csg Guía",
+          "planMD": 820,
+          "actualMD": 819.6,
+          "operations": [
+            {
+              "startTime": "00:00",
+              "endTime": "10:00",
+              "duration": 600,
+              "code": "DRILL",
+              "description": "Perforación rotaria 17-1/2\" desde 463m a 820m — llegada a zapata superficial.",
+              "md": 819.6,
+              "wob": 26,
+              "rpm": 100,
+              "torque": 12,
+              "gpm": 510,
+              "spp": 2750
+            },
+            {
+              "startTime": "10:00",
+              "endTime": "14:00",
+              "duration": 240,
+              "code": "TRIP",
+              "description": "Viaje fuera de pozo para casing.",
+              "md": 819.6,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.5,
+              "gpm": 100,
+              "spp": 230
+            },
+            {
+              "startTime": "14:00",
+              "endTime": "20:00",
+              "duration": 360,
+              "code": "CASING",
+              "description": "Corrida de casing 13-3/8\" K-55 54#.",
+              "md": 819.6,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.3,
+              "gpm": 80,
+              "spp": 150
+            },
+            {
+              "startTime": "20:00",
+              "endTime": "23:59",
+              "duration": 239,
+              "code": "CEMENT",
+              "description": "Cementación primaria de casing superficial.",
+              "md": 819.6,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.2,
+              "gpm": 320,
+              "spp": 1700
+            }
+          ],
+          "planCost": 385000,
+          "actualCost": 332000
+        },
+        {
+          "dayNumber": 3,
+          "date": "2026-05-21",
+          "phase": "Csg Aislación Intermedio",
+          "planMD": 1350,
+          "actualMD": 1253.6,
+          "operations": [
+            {
+              "startTime": "00:00",
+              "endTime": "06:00",
+              "duration": 360,
+              "code": "BOP",
+              "description": "Nipple-up de BOP y pruebas.",
+              "md": 819.6,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.1,
+              "gpm": 50,
+              "spp": 100
+            },
+            {
+              "startTime": "06:00",
+              "endTime": "08:00",
+              "duration": 120,
+              "code": "TRIP",
+              "description": "Bajada de BHA 12-1/4\".",
+              "md": 819.6,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.5,
+              "gpm": 100,
+              "spp": 220
+            },
+            {
+              "startTime": "08:00",
+              "endTime": "23:59",
+              "duration": 959,
+              "code": "DRILL",
+              "description": "Perforación rotaria 12-1/4\" desde 820m a 1254m.",
+              "md": 1253.6,
+              "wob": 30,
+              "rpm": 110,
+              "torque": 14,
+              "gpm": 535,
+              "spp": 2900
+            }
+          ],
+          "planCost": 235000,
+          "actualCost": 205000
+        },
+        {
+          "dayNumber": 4,
+          "date": "2026-05-22",
+          "phase": "Csg Aislación Intermedio",
+          "planMD": 1830,
+          "actualMD": 1783.9,
+          "operations": [
+            {
+              "startTime": "00:00",
+              "endTime": "08:00",
+              "duration": 480,
+              "code": "DRILL",
+              "description": "Perforación rotaria 12-1/4\" desde 1254m a 1591m.",
+              "md": 1591.1,
+              "wob": 31,
+              "rpm": 112,
+              "torque": 14.5,
+              "gpm": 540,
+              "spp": 2950
+            },
+            {
+              "startTime": "08:00",
+              "endTime": "13:00",
+              "duration": 300,
+              "code": "NPT_E",
+              "nptCategory": "external",
+              "description": "Inspección de seguridad por auditoría externa — suspensión de operaciones.",
+              "md": 1591.1,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0,
+              "gpm": 0,
+              "spp": 0
+            },
+            {
+              "startTime": "13:00",
+              "endTime": "23:59",
+              "duration": 659,
+              "code": "DRILL",
+              "description": "Reanudación perforación desde 1591m a 1784m.",
+              "md": 1783.9,
+              "wob": 31,
+              "rpm": 113,
+              "torque": 14.6,
+              "gpm": 540,
+              "spp": 2960
+            }
+          ],
+          "planCost": 219000,
+          "actualCost": 215000
+        },
+        {
+          "dayNumber": 5,
+          "date": "2026-05-23",
+          "phase": "Csg Aislación Intermedio",
+          "planMD": 2220,
+          "actualMD": 2217.9,
+          "operations": [
+            {
+              "startTime": "00:00",
+              "endTime": "14:00",
+              "duration": 840,
+              "code": "DRILL",
+              "description": "Perforación rotaria 12-1/4\" desde 1784m a 2218m. ROP 32 m/h.",
+              "md": 2217.9,
+              "wob": 32,
+              "rpm": 115,
+              "torque": 14.8,
+              "gpm": 545,
+              "spp": 2990
+            },
+            {
+              "startTime": "14:00",
+              "endTime": "16:00",
+              "duration": 120,
+              "code": "CONN",
+              "description": "Conexión de tiros consecutivos.",
+              "md": 2217.9,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.4,
+              "gpm": 180,
+              "spp": 350
+            },
+            {
+              "startTime": "16:00",
+              "endTime": "23:59",
+              "duration": 479,
+              "code": "DRILL",
+              "description": "Continuación perforación 12-1/4\".",
+              "md": 2217.9,
+              "wob": 32,
+              "rpm": 115,
+              "torque": 14.7,
+              "gpm": 545,
+              "spp": 2980
+            }
+          ],
+          "planCost": 219000,
+          "actualCost": 192000
+        },
+        {
+          "dayNumber": 6,
+          "date": "2026-05-24",
+          "phase": "Csg Aislación Intermedio",
+          "planMD": 2410,
+          "actualMD": 2410.7,
+          "operations": [
+            {
+              "startTime": "00:00",
+              "endTime": "08:00",
+              "duration": 480,
+              "code": "DRILL",
+              "description": "Perforación rotaria 12-1/4\" desde 2218m a 2411m — llegada a zapata intermedia.",
+              "md": 2410.7,
+              "wob": 32,
+              "rpm": 115,
+              "torque": 14.9,
+              "gpm": 545,
+              "spp": 3000
+            },
+            {
+              "startTime": "08:00",
+              "endTime": "10:00",
+              "duration": 120,
+              "code": "CIRC",
+              "description": "Circulación de limpieza pre-viaje.",
+              "md": 2410.7,
+              "wob": 0,
+              "rpm": 60,
+              "torque": 3.5,
+              "gpm": 550,
+              "spp": 2900
+            },
+            {
+              "startTime": "10:00",
+              "endTime": "16:00",
+              "duration": 360,
+              "code": "TRIP",
+              "description": "Viaje fuera de pozo (POOH) para corrida de casing 9-5/8\".",
+              "md": 2410.7,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.5,
+              "gpm": 100,
+              "spp": 250
+            },
+            {
+              "startTime": "16:00",
+              "endTime": "23:59",
+              "duration": 479,
+              "code": "CASING",
+              "description": "Inicio corrida de casing 9-5/8\" N-80 43#.",
+              "md": 2410.7,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.3,
+              "gpm": 80,
+              "spp": 150
+            }
+          ],
+          "planCost": 361000,
+          "actualCost": 312000
+        },
+        {
+          "dayNumber": 7,
+          "date": "2026-05-25",
+          "phase": "Csg Aislación Intermedio",
+          "planMD": 2410,
+          "actualMD": 2410.7,
+          "operations": [
+            {
+              "startTime": "00:00",
+              "endTime": "12:00",
+              "duration": 720,
+              "code": "NPT_L",
+              "nptCategory": "logistics",
+              "description": "Espera por arribo de centralizadores y accesorios de casing desde base.",
+              "md": 2410.7,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0,
+              "gpm": 0,
+              "spp": 0
+            },
+            {
+              "startTime": "12:00",
+              "endTime": "23:59",
+              "duration": 719,
+              "code": "CASING",
+              "description": "Continuación corrida de casing 9-5/8\" — instalación de centralizadores.",
+              "md": 2410.7,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.3,
+              "gpm": 80,
+              "spp": 150
+            }
+          ],
+          "planCost": 361000,
+          "actualCost": 369000
+        },
+        {
+          "dayNumber": 8,
+          "date": "2026-05-26",
+          "phase": "Csg Aislación Intermedio",
+          "planMD": 2410,
+          "actualMD": 2410.7,
+          "operations": [
+            {
+              "startTime": "08:00",
+              "endTime": "20:00",
+              "duration": 720,
+              "code": "CASING",
+              "description": "Corrida de casing 9-5/8\" P-110. Profundidad 2411m. Procedimiento exitoso.",
+              "md": 2410.7,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.1,
+              "gpm": 80,
+              "spp": 150
+            },
+            {
+              "startTime": "20:00",
+              "endTime": "23:59",
+              "duration": 239,
+              "code": "CIRC",
+              "description": "Circulación pre-cementación. Limpieza de pozo.",
+              "md": 2410.7,
+              "wob": 0,
+              "rpm": 0,
+              "torque": 0.2,
+              "gpm": 320,
+              "spp": 1700
+            }
+          ],
+          "planCost": 362000,
+          "actualCost": 311000
+        }
+      ],
+      "afe": 2420000
+    }
+  ],
+  "upcomingLocations": [
+    {
+      "id": "LV-204",
+      "name": "Loma Verde x-204",
+      "field": "Loma Verde",
+      "area": "Cuenca Central",
+      "rig": "H&P 405",
+      "estimatedSpud": "2026-06-10",
+      "targetDepth": 3380,
+      "afeEstimate": 3650000,
+      "gates": {
+        "locacion": {
+          "status": "done",
+          "date": "2026-05-12",
+          "note": "Picada y locación terminadas"
+        },
+        "programa": {
+          "status": "done",
+          "date": "2026-05-20",
+          "note": "Programa de perforación aprobado"
+        },
+        "afe": {
+          "status": "done",
+          "date": "2026-05-22",
+          "note": "AFE aprobado por socios"
+        },
+        "permisos": {
+          "status": "progress",
+          "date": "2026-06-05",
+          "note": "Permiso ambiental en trámite"
+        }
+      }
+    },
+    {
+      "id": "BS-118",
+      "name": "Bloque Sur x-118",
+      "field": "Cañadón Seco",
+      "area": "Bloque Sur",
+      "rig": "Pendiente",
+      "estimatedSpud": "2026-06-24",
+      "targetDepth": 3120,
+      "afeEstimate": 3280000,
+      "gates": {
+        "locacion": {
+          "status": "done",
+          "date": "2026-05-08",
+          "note": "Locación lista, acceso consolidado"
+        },
+        "programa": {
+          "status": "progress",
+          "date": "2026-06-10",
+          "note": "Programa en revisión por Ingeniería"
+        },
+        "afe": {
+          "status": "progress",
+          "date": "2026-06-12",
+          "note": "AFE presentado, pend. aprobación"
+        },
+        "permisos": {
+          "status": "pending",
+          "date": null,
+          "note": "Sin iniciar gestión"
+        }
+      }
+    },
+    {
+      "id": "ME-091",
+      "name": "Manantiales Este x-091",
+      "field": "Manantiales Behr",
+      "area": "Bloque Este",
+      "rig": "Pendiente",
+      "estimatedSpud": "2026-07-08",
+      "targetDepth": 2980,
+      "afeEstimate": 2950000,
+      "gates": {
+        "locacion": {
+          "status": "progress",
+          "date": "2026-06-20",
+          "note": "Movimiento de suelos en curso"
+        },
+        "programa": {
+          "status": "pending",
+          "date": null,
+          "note": "A la espera de estudio geológico"
+        },
+        "afe": {
+          "status": "pending",
+          "date": null,
+          "note": "No presentado"
+        },
+        "permisos": {
+          "status": "progress",
+          "date": "2026-06-28",
+          "note": "Servidumbre de paso en negociación"
+        }
+      }
+    },
+    {
+      "id": "CD-330",
+      "name": "Cerro Dragón x-330",
+      "field": "Cerro Dragón",
+      "area": "Flanco Norte",
+      "rig": "DLS 4001",
+      "estimatedSpud": "2026-07-22",
+      "targetDepth": 3450,
+      "afeEstimate": 3820000,
+      "gates": {
+        "locacion": {
+          "status": "pending",
+          "date": null,
+          "note": "Relevamiento topográfico pendiente"
+        },
+        "programa": {
+          "status": "pending",
+          "date": null,
+          "note": "No iniciado"
+        },
+        "afe": {
+          "status": "pending",
+          "date": null,
+          "note": "No iniciado"
+        },
+        "permisos": {
+          "status": "pending",
+          "date": null,
+          "note": "No iniciado"
+        }
+      }
+    },
+    {
+      "id": "ET-256",
+      "name": "El Trébol x-256",
+      "field": "El Trébol",
+      "area": "Cuenca Central",
+      "rig": "H&P 410",
+      "estimatedSpud": "2026-06-30",
+      "targetDepth": 3210,
+      "afeEstimate": 3400000,
+      "gates": {
+        "locacion": {
+          "status": "done",
+          "date": "2026-05-02",
+          "note": "Locación y acceso listos"
+        },
+        "programa": {
+          "status": "done",
+          "date": "2026-05-18",
+          "note": "Programa aprobado"
+        },
+        "afe": {
+          "status": "progress",
+          "date": "2026-06-15",
+          "note": "AFE en circuito de firmas"
+        },
+        "permisos": {
+          "status": "done",
+          "date": "2026-05-25",
+          "note": "Permisos de ingreso emitidos"
+        }
+      }
+    }
+  ]
+}

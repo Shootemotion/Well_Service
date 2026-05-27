@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drilling Command Center v2.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0d1117',
+                        panelBg: '#161b22',
+                        borderGray: '#30363d',
+                        electricBlue: '#00f6ff',
+                        successGreen: '#10b981',
+                        alertRed: '#ef4444',
+                        warningYellow: '#eab308',
+                        textMain: '#c9d1d9',
+                        textMuted: '#8b949e'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0d1117; color: #c9d1d9; }
+        .number-font { font-family: 'JetBrains Mono', monospace; }
+        .panel { background-color: #161b22; border: 1px solid #30363d; border-radius: 0.5rem; }
+        .panel-header { border-bottom: 1px solid #30363d; padding: 0.5rem 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.75rem; color: #fff; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(90deg, #161b22 0%, #0d1117 100%); }
+        .table-header th { background-color: #0d1117; border-bottom: 1px solid #30363d; padding: 0.5rem; text-align: left; font-size: 0.65rem; color: #8b949e; position: sticky; top: 0; text-transform: uppercase; letter-spacing: 0.05em;}
+        .table-row td { padding: 0.4rem 0.5rem; border-bottom: 1px solid #21262d; font-size: 0.75rem; transition: background-color 0.2s ease; }
+        .table-row:hover { background-color: rgba(0, 246, 255, 0.05); }
+        
+        /* Scrollbar styles */
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: #0d1117; }
+        ::-webkit-scrollbar-thumb { background: #30363d; border-radius: 2px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8b949e; }
+        
+        /* Schematic SVGs */
+        .casing-pipe { fill: none; stroke: #8b949e; stroke-width: 2; }
+        .cement { fill: rgba(139, 148, 158, 0.15); }
+        .open-hole { fill: none; stroke: #eab308; stroke-dasharray: 4; stroke-width: 2; }
+        
+        /* Sensor Cards */
+        .sensor-card { background-color: #0d1117; border: 1px solid #30363d; border-radius: 0.375rem; padding: 0.5rem 0.75rem; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); transition: transform 0.2s, box-shadow 0.2s; }
+        .sensor-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.5); border-color: #4b5563; }
+        .sensor-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; }
+        .sensor-green::before { background-color: #10b981; box-shadow: 0 0 8px #10b981; }
+        .sensor-yellow::before { background-color: #eab308; box-shadow: 0 0 8px #eab308; }
+        .sensor-red::before { background-color: #ef4444; box-shadow: 0 0 8px #ef4444; }
+        
+        .sensor-title { font-size: 0.65rem; color: #8b949e; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+        .sensor-value { font-size: 1.25rem; font-weight: 700; color: #fff; text-shadow: 0 0 8px rgba(255,255,255,0.2); }
+        .sensor-unit { font-size: 0.65rem; color: #8b949e; margin-left: 2px; }
+        
+        .glow-text { text-shadow: 0 0 10px rgba(0, 246, 255, 0.5); }
+        .glow-pulse { animation: pulseGlow 2s infinite; }
+        
+        @keyframes pulseGlow {
+            0% { text-shadow: 0 0 5px rgba(239, 68, 68, 0.5); }
+            50% { text-shadow: 0 0 15px rgba(239, 68, 68, 1); }
+            100% { text-shadow: 0 0 5px rgba(239, 68, 68, 0.5); }
+        }
+    </style>
+</head>
+<body class="h-screen w-screen overflow-hidden flex flex-col p-2 space-y-2 box-border bg-[#05070a]">
+
+    <!-- 1. ENCABEZADO DE CONTROL OPERATIVO -->
+    <header class="panel flex flex-col md:flex-row justify-between items-center px-4 py-2 shrink-0 bg-[#0d1117]/80 backdrop-blur-sm border-[#1f2328]">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded bg-black border border-electricBlue flex items-center justify-center font-black text-xl text-electricBlue shadow-[0_0_12px_rgba(0,246,255,0.4)]">DC</div>
+            <h1 class="text-lg font-black text-white tracking-[0.15em] glow-text">DRILLING COMMAND v2.0</h1>
+        </div>
+        <div class="flex flex-wrap gap-2 text-[10px] font-semibold mt-2 md:mt-0 uppercase tracking-wide">
+            <span class="bg-[#161b22] px-3 py-1.5 rounded border border-borderGray flex items-center gap-2"><span class="text-textMuted">Pozo:</span> <span class="text-white font-mono">C0.X-112</span></span>
+            <span class="bg-[#161b22] px-3 py-1.5 rounded border border-borderGray flex items-center gap-2"><span class="text-textMuted">Operador:</span> <span class="text-white">Operadora-Petroleo</span></span>
+            <span class="bg-[#161b22] px-3 py-1.5 rounded border border-borderGray flex items-center gap-2"><span class="text-textMuted">RIG:</span> <span class="text-white">H&P 405</span></span>
+            <span class="bg-successGreen/10 text-successGreen border border-successGreen/30 px-3 py-1.5 rounded flex items-center gap-2 shadow-[0_0_8px_rgba(16,185,129,0.2)]">
+                <div class="w-1.5 h-1.5 rounded-full bg-successGreen animate-ping"></div> Estado: DRILLING 8-1/2" HOLE
+            </span>
+            <span class="bg-[#161b22] px-3 py-1.5 rounded border border-borderGray flex items-center gap-2"><span class="text-textMuted">MD actual:</span> <span class="text-electricBlue font-mono glow-text text-xs">3964.3 m</span></span>
+            <span class="bg-[#161b22] px-3 py-1.5 rounded border border-borderGray flex items-center gap-2"><span class="text-textMuted">TVD:</span> <span class="text-white font-mono">3569.5 m</span></span>
+        </div>
+    </header>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-2 flex-grow min-h-0">
+        
+        <!-- PANEL 1 (Col 1-2): DDR + PANEL 5 -->
+        <div class="lg:col-span-2 flex flex-col gap-2 min-h-0">
+            <!-- DDR Table -->
+            <div class="panel flex-grow flex flex-col min-h-0 border-[#1f2328]">
+                <div class="panel-header">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-3 h-3 text-electricBlue" fill="currentColor" viewBox="0 0 20 20"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/></svg>
+                        Registro de Operaciones Diarias (DDR)
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-1 bg-[#161b22] px-2 py-1 rounded border border-borderGray">
+                            <label for="dateFilter" class="text-[9px] text-textMuted uppercase font-semibold">Filtrar por Día:</label>
+                            <input type="date" id="dateFilter" class="bg-darkBg text-white text-[9px] px-2 py-0.5 rounded border border-borderGray focus:outline-none focus:border-electricBlue" value="2026-05-26">
+                        </div>
+                        <span class="text-[9px] bg-electricBlue/10 text-electricBlue px-2 py-0.5 rounded border border-electricBlue/20 font-mono flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-electricBlue block"></span> EN VIVO
+                        </span>
+                    </div>
+                </div>
+                <div class="flex-grow overflow-auto">
+                    <table class="w-full text-left border-collapse whitespace-nowrap">
+                        <thead class="table-header">
+                            <tr>
+                                <th class="w-10">Hora Inicio</th>
+                                <th class="w-10">Hora Fin</th>
+                                <th class="w-10 text-center">Dur (Min)</th>
+                                <th class="w-12 text-center">Código</th>
+                                <th class="w-full">Descripción Operativa</th>
+                                <th class="text-right">MD (m)</th>
+                                <th class="text-right">WOB</th>
+                                <th class="text-right">RPM</th>
+                                <th class="text-right">TORQUE</th>
+                                <th class="text-right">GPM</th>
+                                <th class="text-right">SPP</th>
+                            </tr>
+                        </thead>
+                        <tbody class="number-font" id="ddrTableBody">
+                            <tr class="table-row" data-date="2026-05-26">
+                                <td class="text-textMuted">00:00</td><td class="text-white">02:30</td><td class="text-center">150</td>
+                                <td class="text-center"><span class="text-successGreen font-bold text-[10px] bg-successGreen/10 px-1.5 py-0.5 rounded border border-successGreen/20">DRILL</span></td>
+                                <td class="font-sans text-[11px] text-textMain whitespace-normal leading-tight">Perforación rotaria de fase 8-1/2" desde 3850m a 3895m. Parámetros estables.</td>
+                                <td class="text-right text-electricBlue">3895.0</td><td class="text-right">35</td><td class="text-right">120</td><td class="text-right">16.5</td><td class="text-right">550</td><td class="text-right">3100</td>
+                            </tr>
+                            <tr class="table-row" data-date="2026-05-26">
+                                <td class="text-textMuted">02:30</td><td class="text-white">03:00</td><td class="text-center">30</td>
+                                <td class="text-center"><span class="text-electricBlue font-bold text-[10px] bg-electricBlue/10 px-1.5 py-0.5 rounded border border-electricBlue/20">CONN</span></td>
+                                <td class="font-sans text-[11px] text-textMain whitespace-normal leading-tight">Conexión de tiro de perforación (Stand #124). Rellenar pozo.</td>
+                                <td class="text-right text-electricBlue">3895.0</td><td class="text-right text-textMuted">0</td><td class="text-right text-textMuted">0</td><td class="text-right">0.5</td><td class="text-right">200</td><td class="text-right">400</td>
+                            </tr>
+                            <tr class="table-row" data-date="2026-05-26">
+                                <td class="text-textMuted">03:00</td><td class="text-white">06:15</td><td class="text-center">195</td>
+                                <td class="text-center"><span class="text-successGreen font-bold text-[10px] bg-successGreen/10 px-1.5 py-0.5 rounded border border-successGreen/20">DRILL</span></td>
+                                <td class="font-sans text-[11px] text-textMain whitespace-normal leading-tight">Perforación deslizando (Slide) para corrección de azimut (+1.2°/10m).</td>
+                                <td class="text-right text-electricBlue">3922.3</td><td class="text-right">28</td><td class="text-right text-warningYellow">40</td><td class="text-right">14.1</td><td class="text-right">540</td><td class="text-right">3250</td>
+                            </tr>
+                            <tr class="table-row bg-alertRed/5 border-l-2 border-alertRed relative" data-date="2026-05-26">
+                                <td class="text-textMuted">06:15</td><td class="text-white">07:00</td><td class="text-center text-alertRed font-bold">45</td>
+                                <td class="text-center"><span class="text-alertRed font-bold text-[10px] bg-alertRed/10 px-1.5 py-0.5 rounded border border-alertRed/30 glow-pulse">NPT_M</span></td>
+                                <td class="font-sans text-[11px] text-alertRed whitespace-normal leading-tight font-semibold">Falla en bomba de lodo #2. Cambio de empaquetadura de pistón.</td>
+                                <td class="text-right text-electricBlue">3922.3</td><td class="text-right text-textMuted">0</td><td class="text-right text-textMuted">0</td><td class="text-right text-textMuted">0.0</td><td class="text-right text-textMuted">0</td><td class="text-right text-textMuted">0</td>
+                            </tr>
+                            <tr class="table-row" data-date="2026-05-26">
+                                <td class="text-textMuted">07:00</td><td class="text-white">09:45</td><td class="text-center">165</td>
+                                <td class="text-center"><span class="text-successGreen font-bold text-[10px] bg-successGreen/10 px-1.5 py-0.5 rounded border border-successGreen/20">DRILL</span></td>
+                                <td class="font-sans text-[11px] text-textMain whitespace-normal leading-tight">Perforación rotaria desde 3922.3m a 3964.3m. Incremento de ROP a 15.2 m/h.</td>
+                                <td class="text-right text-electricBlue font-bold">3964.3</td><td class="text-right">38</td><td class="text-right">125</td><td class="text-right">17.2</td><td class="text-right">560</td><td class="text-right">3150</td>
+                            </tr>
+                            <tr class="table-row" data-date="2026-05-26">
+                                <td class="text-textMuted">09:45</td><td class="text-white">10:30</td><td class="text-center">45</td>
+                                <td class="text-center"><span class="text-warningYellow font-bold text-[10px] bg-warningYellow/10 px-1.5 py-0.5 rounded border border-warningYellow/20">CIRC</span></td>
+                                <td class="font-sans text-[11px] text-textMain whitespace-normal leading-tight">Circulación de fondo para limpiar pozo y acondicionar lodo antes de viaje.</td>
+                                <td class="text-right text-electricBlue font-bold">3964.3</td><td class="text-right">5</td><td class="text-right">60</td><td class="text-right">4.2</td><td class="text-right">560</td><td class="text-right">2900</td>
+                            </tr>
+                            <tr class="table-row" data-date="2026-05-25" style="display:none;">
+                                <td class="text-textMuted">14:20</td><td class="text-white">16:50</td><td class="text-center">150</td>
+                                <td class="text-center"><span class="text-successGreen font-bold text-[10px] bg-successGreen/10 px-1.5 py-0.5 rounded border border-successGreen/20">DRILL</span></td>
+                                <td class="font-sans text-[11px] text-textMain whitespace-normal leading-tight">Perforación rotaria de fase 8-1/2" desde 3700m a 3750m. Parámetros normales.</td>
+                                <td class="text-right text-electricBlue">3750.0</td><td class="text-right">32</td><td class="text-right">118</td><td class="text-right">15.8</td><td class="text-right">555</td><td class="text-right">3080</td>
+                            </tr>
+                            <tr class="table-row" data-date="2026-05-25" style="display:none;">
+                                <td class="text-textMuted">16:50</td><td class="text-white">18:00</td><td class="text-center">70</td>
+                                <td class="text-center"><span class="text-electricBlue font-bold text-[10px] bg-electricBlue/10 px-1.5 py-0.5 rounded border border-electricBlue/20">CONN</span></td>
+                                <td class="font-sans text-[11px] text-textMain whitespace-normal leading-tight">Conexión de tiro de perforación (Stand #122). Procedimiento rutinario.</td>
+                                <td class="text-right text-electricBlue">3750.0</td><td class="text-right text-textMuted">0</td><td class="text-right text-textMuted">0</td><td class="text-right">0.3</td><td class="text-right">180</td><td class="text-right">350</td>
+                            </tr>
+                            <tr class="table-row" data-date="2026-05-25" style="display:none;">
+                                <td class="text-textMuted">18:00</td><td class="text-white">22:30</td><td class="text-center">270</td>
+                                <td class="text-center"><span class="text-successGreen font-bold text-[10px] bg-successGreen/10 px-1.5 py-0.5 rounded border border-successGreen/20">DRILL</span></td>
+                                <td class="font-sans text-[11px] text-textMain whitespace-normal leading-tight">Perforación rotaria desde 3750m a 3850m. ROP = 13.3 m/h.</td>
+                                <td class="text-right text-electricBlue">3850.0</td><td class="text-right">34</td><td class="text-right">121</td><td class="text-right">16.2</td><td class="text-right">551</td><td class="text-right">3095</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- PANEL 5: Secundarios -->
+            <div class="grid grid-cols-2 gap-2 shrink-0">
+                <div class="panel border-[#1f2328] p-3 flex flex-col justify-between">
+                    <div class="flex items-center gap-2 mb-2 border-b border-borderGray pb-1">
+                        <svg class="w-3 h-3 text-textMuted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        <h3 class="text-[10px] font-bold text-white tracking-widest uppercase">Tabla BHA #4</h3>
+                    </div>
+                    <ul class="text-[10px] text-textMuted space-y-1 font-mono tracking-tight bg-darkBg p-2 rounded border border-[#1f2328]">
+                        <li class="flex justify-between border-b border-[#21262d] pb-0.5"><span class="text-white">1. Tricono PDC 8-1/2"</span> <span class="text-electricBlue">0.5m</span></li>
+                        <li class="flex justify-between border-b border-[#21262d] pb-0.5"><span class="text-white">2. Motor de Fondo 6-3/4"</span> <span class="text-electricBlue">8.4m</span></li>
+                        <li class="flex justify-between border-b border-[#21262d] pb-0.5"><span class="text-white">3. MWD/LWD Tool</span> <span class="text-electricBlue">9.1m</span></li>
+                        <li class="flex justify-between border-b border-[#21262d] pb-0.5"><span class="text-white">4. Monel</span> <span class="text-electricBlue">9.2m</span></li>
+                        <li class="flex justify-between"><span class="text-white">5. Heavy Weight Drill Pipe 5"</span> <span class="text-electricBlue">45m</span></li>
+                    </ul>
+                </div>
+                
+                <div class="grid grid-rows-2 gap-2">
+                    <div class="panel border-[#1f2328] p-3 flex flex-col justify-center">
+                        <div class="flex items-center gap-2 mb-1.5">
+                            <div class="w-1.5 h-1.5 rounded-full bg-electricBlue"></div>
+                            <h3 class="text-[10px] font-bold text-white tracking-widest uppercase">Resumen de Fluidos</h3>
+                        </div>
+                        <div class="grid grid-cols-2 gap-x-2 gap-y-1 text-[10px] bg-darkBg p-2 rounded border border-[#1f2328]">
+                            <div class="flex flex-col"><span class="text-textMuted">Tipo</span><span class="text-white font-mono">WBM Lignosulf.</span></div>
+                            <div class="flex flex-col"><span class="text-textMuted">Viscosidad</span><span class="text-white font-mono">48 sec</span></div>
+                            <div class="flex flex-col"><span class="text-textMuted">Ph</span><span class="text-white font-mono">9.5</span></div>
+                            <div class="flex flex-col"><span class="text-textMuted">Filtrado API</span><span class="text-white font-mono">6.2 cc</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="panel border-alertRed/30 p-3 flex flex-col justify-center relative overflow-hidden bg-alertRed/5">
+                        <div class="absolute right-0 top-0 h-full w-1 bg-alertRed shadow-[0_0_10px_#ef4444]"></div>
+                        <div class="flex items-center gap-2 mb-1.5">
+                            <svg class="w-3 h-3 text-alertRed" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                            <h3 class="text-[10px] font-bold text-alertRed tracking-widest uppercase">Resumen de NPT</h3>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <div class="flex justify-between items-baseline border-b border-alertRed/20 pb-1">
+                                <span class="text-[9px] text-textMuted uppercase">Total Acumulado</span>
+                                <span class="text-white font-black font-mono text-xs">24.5 HRS</span>
+                            </div>
+                            <p class="text-[9px] text-textMuted leading-snug pt-0.5">
+                                <span class="text-alertRed font-semibold">Evento Principal:</span> 18.0 hrs por Atrapamiento Mecánico el Día 5.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PANEL 2 (Col 3): CHART -->
+        <div class="panel flex flex-col min-h-0 border-[#1f2328]">
+            <div class="panel-header">
+                <div class="flex items-center gap-2">
+                    <svg class="w-3 h-3 text-electricBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path></svg>
+                    Days vs. Depth
+                </div>
+            </div>
+            <div class="flex-grow p-2 relative h-full w-full bg-darkBg">
+                <canvas id="daysDepthChart"></canvas>
+                <!-- Etiquetas de Casing -->
+                <div class="absolute text-[8px] font-mono bg-[#161b22] border border-borderGray px-1.5 py-0.5 rounded text-textMuted shadow-md z-10 pointer-events-none" style="top: 31%; left: 15%;">
+                    <div class="w-2 h-px bg-textMuted absolute -left-2 top-1/2"></div>
+                    13-3/8" Csg @ 1250m
+                </div>
+                <div class="absolute text-[8px] font-mono bg-[#161b22] border border-borderGray px-1.5 py-0.5 rounded text-textMuted shadow-md z-10 pointer-events-none" style="top: 59%; left: 35%;">
+                    <div class="w-2 h-px bg-textMuted absolute -left-2 top-1/2"></div>
+                    9-5/8" Csg @ 2540m
+                </div>
+            </div>
+        </div>
+
+        <!-- PANEL 3 (Col 4): SCHEMATIC -->
+        <div class="panel flex flex-col min-h-0 border-[#1f2328]">
+            <div class="panel-header">
+                <div class="flex items-center gap-2">
+                    <svg class="w-3 h-3 text-electricBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                    Wellbore Schematic
+                </div>
+            </div>
+            <div class="flex-grow p-3 bg-darkBg flex relative overflow-y-auto">
+                
+                <!-- SVG Schematic Column -->
+                <div class="w-16 shrink-0 h-[450px] relative border-r border-[#1f2328] pr-2">
+                    <svg viewBox="0 0 100 450" class="w-full h-full" preserveAspectRatio="none">
+                        <!-- Ground line -->
+                        <line x1="0" y1="0" x2="100" y2="0" stroke="#8b949e" stroke-width="2" />
+                        
+                        <!-- Conductor 20" @ 80m (scale ~ 30px) -->
+                        <path class="cement" d="M 10,0 L 30,0 L 30,30 L 10,30 Z" />
+                        <path class="cement" d="M 70,0 L 90,0 L 90,30 L 70,30 Z" />
+                        <line x1="30" y1="0" x2="30" y2="30" stroke="#d1d5db" stroke-width="4" />
+                        <line x1="70" y1="0" x2="70" y2="30" stroke="#d1d5db" stroke-width="4" />
+                        
+                        <!-- Surface 13-3/8" @ 1250m (scale ~ 125px) -->
+                        <path class="cement" d="M 20,30 L 40,30 L 40,125 L 20,125 Z" />
+                        <path class="cement" d="M 60,30 L 80,30 L 80,125 L 60,125 Z" />
+                        <line x1="40" y1="0" x2="40" y2="125" stroke="#9ca3af" stroke-width="3" />
+                        <line x1="60" y1="0" x2="60" y2="125" stroke="#9ca3af" stroke-width="3" />
+                        
+                        <!-- Intermediate 9-5/8" @ 2540m (scale ~ 254px) -->
+                        <path class="cement" d="M 30,110 L 45,110 L 45,254 L 30,254 Z" />
+                        <path class="cement" d="M 55,110 L 70,110 L 70,254 L 55,254 Z" />
+                        <line x1="45" y1="0" x2="45" y2="254" stroke="#6b7280" stroke-width="2" />
+                        <line x1="55" y1="0" x2="55" y2="254" stroke="#6b7280" stroke-width="2" />
+
+                        <!-- Open Hole 8-1/2" @ 3964.3m (scale ~ 396px) -->
+                        <line x1="45" y1="254" x2="45" y2="396" class="open-hole" />
+                        <line x1="55" y1="254" x2="55" y2="396" class="open-hole" />
+                        
+                        <!-- Drill string (simulated in center) -->
+                        <rect x="48.5" y="0" width="3" height="396" fill="#00f6ff" opacity="0.6" />
+                        <!-- BHA -->
+                        <rect x="47.5" y="360" width="5" height="36" fill="#00f6ff" />
+                        <!-- Bit -->
+                        <polygon points="45,396 55,396 50,405" fill="#00f6ff" />
+                        
+                        <!-- Depth Markers lines extending to right -->
+                        <line x1="70" y1="30" x2="100" y2="30" stroke="#30363d" stroke-width="1" stroke-dasharray="2" />
+                        <line x1="80" y1="125" x2="100" y2="125" stroke="#30363d" stroke-width="1" stroke-dasharray="2" />
+                        <line x1="70" y1="254" x2="100" y2="254" stroke="#30363d" stroke-width="1" stroke-dasharray="2" />
+                        <line x1="55" y1="396" x2="100" y2="396" stroke="#00f6ff" stroke-width="1" stroke-dasharray="2" opacity="0.5" />
+                    </svg>
+                </div>
+                
+                <!-- Labels Column -->
+                <div class="flex-grow flex flex-col font-sans text-[9px] relative pl-2 h-[450px]">
+                    
+                    <div class="absolute left-0 w-full" style="top: 15px;">
+                        <div class="bg-[#161b22] border border-borderGray p-1.5 rounded-r shadow-sm">
+                            <span class="text-white font-bold block">[Superficie] Casing de Conductor</span>
+                            <span class="text-textMuted block font-mono">20" @ 80m MD</span>
+                            <span class="text-textMuted block font-mono">TOC @ Superficie</span>
+                        </div>
+                    </div>
+                    
+                    <div class="absolute left-0 w-full" style="top: 110px;">
+                        <div class="bg-[#161b22] border border-borderGray p-1.5 rounded-r shadow-sm">
+                            <span class="text-white font-bold block">[Intermedio 1] Casing de Superficie</span>
+                            <span class="text-textMuted block font-mono">13-3/8" N-80 68# @ 1250m MD</span>
+                            <span class="text-textMuted block font-mono">TOC @ 300m</span>
+                        </div>
+                    </div>
+                    
+                    <div class="absolute left-0 w-full" style="top: 235px;">
+                        <div class="bg-[#161b22] border border-borderGray p-1.5 rounded-r shadow-sm">
+                            <span class="text-white font-bold block">[Intermedio 2] Casing Intermedio</span>
+                            <span class="text-textMuted block font-mono">9-5/8" P-110 47# @ 2540m MD</span>
+                            <span class="text-textMuted block font-mono">TOC @ 1100m</span>
+                        </div>
+                    </div>
+                    
+                    <div class="absolute left-0 w-full" style="top: 375px;">
+                        <div class="bg-electricBlue/10 border border-electricBlue/30 p-1.5 rounded-r shadow-[0_0_10px_rgba(0,246,255,0.1)]">
+                            <span class="text-electricBlue font-bold block animate-pulse">[Fase Actual] Agujero Abierto</span>
+                            <span class="text-white block font-mono">8-1/2" desde 2540m</span>
+                            <span class="text-white block font-mono font-bold glow-text">hasta 3964.3m (MD actual)</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- PANEL 4: SENSORS (Grid de 6 columnas) -->
+    <div class="panel p-2 shrink-0 border-[#1f2328]">
+        <!-- The user requested a 6-column grid base. For 10 items, we can do grid-cols-6 with some spanning or wrapping. 
+             Here we use grid-cols-6 at lg, and items will wrap to second line perfectly creating a highly dense matrix -->
+        <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-2">
+            
+            <div class="sensor-card sensor-green pl-3">
+                <span class="sensor-title">Peso sobre el Tricono (WOB)</span>
+                <div class="mt-1 flex items-end justify-between"><span class="sensor-value number-font">38.2</span> <span class="sensor-unit">klbs</span></div>
+            </div>
+            
+            <div class="sensor-card sensor-green pl-3">
+                <span class="sensor-title">Peso en el Gancho (HKLD)</span>
+                <div class="mt-1 flex items-end justify-between"><span class="sensor-value number-font">245.3</span> <span class="sensor-unit">klbs</span></div>
+            </div>
+            
+            <div class="sensor-card sensor-yellow pl-3 border border-warningYellow/30 bg-warningYellow/5 shadow-[0_0_15px_rgba(234,179,8,0.1)]">
+                <span class="sensor-title text-warningYellow animate-pulse">Presión de Inyección (SPP)</span>
+                <div class="mt-1 flex items-end justify-between"><span class="sensor-value number-font text-warningYellow">3150</span> <span class="sensor-unit text-warningYellow/70">psi</span></div>
+            </div>
+            
+            <div class="sensor-card sensor-green pl-3">
+                <span class="sensor-title">Revoluciones (RPM)</span>
+                <div class="mt-1 flex items-end justify-between"><span class="sensor-value number-font">125</span> <span class="sensor-unit">rpm</span></div>
+            </div>
+            
+            <div class="sensor-card sensor-green pl-3">
+                <span class="sensor-title">Torque de Torsión (TORQUE)</span>
+                <div class="mt-1 flex items-end justify-between"><span class="sensor-value number-font">17.2</span> <span class="sensor-unit">kft-lb</span></div>
+            </div>
+            
+            <div class="sensor-card sensor-green pl-3">
+                <span class="sensor-title">Gasto de Inyección (FLOW_IN)</span>
+                <div class="mt-1 flex items-end justify-between"><span class="sensor-value number-font">560</span> <span class="sensor-unit">gpm</span></div>
+            </div>
+            
+            <div class="sensor-card sensor-green pl-3">
+                <span class="sensor-title">Retorno de Lodo (FLOW_OUT)</span>
+                <div class="mt-1 flex items-end justify-between"><span class="sensor-value number-font">558</span> <span class="sensor-unit">gpm</span></div>
+            </div>
+            
+            <div class="sensor-card sensor-green pl-3">
+                <span class="sensor-title">Densidad Lodo Ent. (MW IN)</span>
+                <div class="mt-1 flex items-end justify-between"><span class="sensor-value number-font">10.5</span> <span class="sensor-unit">ppg</span></div>
+            </div>
+            
+            <div class="sensor-card sensor-green pl-3">
+                <span class="sensor-title">Temperatura de Entrada (TEMP IN)</span>
+                <div class="mt-1 flex items-end justify-between"><span class="sensor-value number-font">54.2</span> <span class="sensor-unit">°C</span></div>
+            </div>
+            
+            <div class="sensor-card sensor-yellow pl-3 border border-warningYellow/30 bg-warningYellow/5 shadow-[0_0_15px_rgba(234,179,8,0.1)] lg:col-span-3 xl:col-span-1">
+                <span class="sensor-title text-warningYellow">Gas Total (GAS)</span>
+                <div class="mt-1 flex items-end justify-between"><span class="sensor-value number-font text-warningYellow">1.45</span> <span class="sensor-unit text-warningYellow/70">%</span></div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- ChartJS Logic -->
+    <script>
+        // Date filter functionality
+        document.getElementById('dateFilter').addEventListener('change', function(e) {
+            const selectedDate = e.target.value;
+            const tableBody = document.getElementById('ddrTableBody');
+            const rows = tableBody.getElementsByTagName('tr');
+            
+            for (let row of rows) {
+                const rowDate = row.getAttribute('data-date');
+                if (rowDate === selectedDate) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        });
+
+        const ctx = document.getElementById('daysDepthChart').getContext('2d');
+        
+        // Data definitions
+        const planData = [0, 500, 1200, 1800, 2400, 2540, 2540, 2900, 3300, 3700, 4000, 4150, 4150, 4300, 4500];
+        const actualData = [0, 550, 1150, 1650, 2200, 2540, 2540, 2750, 3100, 3500, 3964, null, null, null, null];
+        const labels = Array.from({length: 15}, (_, i) => i + 1);
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'PLAN (m)',
+                        data: planData,
+                        borderColor: '#6b7280',
+                        borderDash: [5, 5],
+                        borderWidth: 2,
+                        fill: false,
+                        pointRadius: 0,
+                        tension: 0,
+                        stepped: false
+                    },
+                    {
+                        label: 'ACTUAL (m)',
+                        data: actualData,
+                        borderColor: '#00f6ff',
+                        backgroundColor: 'rgba(0, 246, 255, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        pointBackgroundColor: '#00f6ff',
+                        pointBorderColor: '#fff',
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        tension: 0
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                layout: {
+                    padding: { top: 10, right: 15, bottom: 0, left: 0 }
+                },
+                scales: {
+                    y: {
+                        reverse: true, // Inverted Y-axis for depth
+                        min: 0,
+                        max: 4500,
+                        grid: { 
+                            color: '#1f2328',
+                            drawBorder: false
+                        },
+                        ticks: { 
+                            color: '#8b949e', 
+                            font: { family: 'JetBrains Mono', size: 9 },
+                            stepSize: 500
+                        },
+                        title: { 
+                            display: true, 
+                            text: 'PROFUNDIDAD (m)', 
+                            color: '#8b949e', 
+                            font: { size: 9, weight: 'bold', family: 'Inter' },
+                            padding: { bottom: 0 }
+                        }
+                    },
+                    x: {
+                        grid: { 
+                            color: '#1f2328',
+                            drawBorder: false
+                        },
+                        ticks: { 
+                            color: '#8b949e', 
+                            font: { family: 'JetBrains Mono', size: 9 }
+                        },
+                        title: { 
+                            display: true, 
+                            text: 'TIEMPO (Días)', 
+                            color: '#8b949e', 
+                            font: { size: 9, weight: 'bold', family: 'Inter' }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        align: 'end',
+                        labels: { 
+                            color: '#c9d1d9', 
+                            usePointStyle: true, 
+                            boxWidth: 6, 
+                            font: { size: 9, family: 'Inter', weight: 'bold' } 
+                        }
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        backgroundColor: 'rgba(13, 17, 23, 0.95)',
+                        titleColor: '#8b949e',
+                        titleFont: { size: 11, family: 'Inter' },
+                        bodyColor: '#fff',
+                        bodyFont: { size: 12, family: 'JetBrains Mono', weight: 'bold' },
+                        borderColor: '#30363d',
+                        borderWidth: 1,
+                        padding: 10,
+                        displayColors: true,
+                        boxWidth: 8,
+                        boxHeight: 8
+                    }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    axis: 'x',
+                    intersect: false
+                }
+            }
+        });
+    </script>
+</body>
+</html>
